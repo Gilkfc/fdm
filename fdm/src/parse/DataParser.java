@@ -12,7 +12,7 @@ public class DataParser {
 	BufferedReader br;
 	String line;
 	String[] split;
-	String dude = "";
+	String data = "";
 	int plcnt = 1;
 	int graph = 1;
 	
@@ -35,10 +35,10 @@ public class DataParser {
 			for(int i=0;i<split.length;i++){
 				if(!split[i].isEmpty()){
 					if(!split[i].contains(".")){
-						dude = dude + "Grafo:" + split[i] + "\r\n";
+						data = data + "Grafo:" + split[i] + "\r\n";
 					}else{
 						
-						dude = dude + "Jogador " + plcnt + " x:" + split[i] + " y:" + split[i+1] + "\r\n";
+						data = data + "Jogador " + plcnt + " x:" + split[i] + " y:" + split[i+1] + "\r\n";
 						plcnt++;
 						i++;
 					}
@@ -62,10 +62,10 @@ public class DataParser {
 				File file = new File("C:\\Users\\Gil\\Desktop\\TCC\\parse " + graph + ".txt");
 				FileWriter fileWriter = new FileWriter(file);
 				BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-				bufferedWriter.write(dude);
+				bufferedWriter.write(data);
 				bufferedWriter.close();
 				graph++;
-				dude = "";
+				data = "";
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
