@@ -16,6 +16,14 @@ public class DataParser {
 	int plcnt = 1;
 	int graph = 1;
 	
+	/*
+	 * This is madly archaic, but at least shows I can actually parse the data.
+	 * As of it 03/May, it takes way too much time to create simple txt files, even though there is a crapload of them..
+	 * I don't expect to generate GraphMLs any faster with this method, so I'll have to think it through.
+	 */
+	
+	
+	
 	public void sourceReader(File file){
 		try {
 			br = new BufferedReader(new FileReader(file));
@@ -59,7 +67,8 @@ public class DataParser {
 			
 	        try {
 				
-				File file = new File("C:\\Users\\Gil\\Desktop\\TCC\\parse " + graph + ".txt");
+
+				File file = new File("parse " + graph + ".txt");
 				FileWriter fileWriter = new FileWriter(file);
 				BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
 				bufferedWriter.write(data);
