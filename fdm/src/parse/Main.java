@@ -16,7 +16,8 @@ public class Main {
 		
 		dp.sourceReader(file);
 		dp.Parse();
-		//dp.writer();
+		dp.printFrame();
+		
 	}
 
 }
