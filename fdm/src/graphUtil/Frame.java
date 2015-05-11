@@ -9,6 +9,8 @@ public class Frame {
 	List<Player> playerList = new ArrayList<Player>();
 	protected int playerIndex = 1;
 	
+	String testText = "";
+	
 	public Frame (int i)
 	{
 		this.index = i;
@@ -21,13 +23,15 @@ public class Frame {
 		playerIndex++;
 	}
 	
-	public void print()
+	public String print()
 	{
-		System.out.println("Frame #" + index);
+		testText = "Frame #" + index + "\r\n";
 		for(int i = 0; i<playerList.size();i++)
 		{
-			System.out.println("Player " + playerList.get(i).getNumber());
-			System.out.println("x: " + playerList.get(i).getxPosition() + " y: " + playerList.get(i).getyPosition() );
+			testText = testText + "Player " + playerList.get(i).getNumber() + "\r\n";
+			testText = testText + "x: " + playerList.get(i).getxPosition() + " y: " + playerList.get(i).getyPosition() + "\r\n";
 		}
+		
+		return testText;
 	}
 }

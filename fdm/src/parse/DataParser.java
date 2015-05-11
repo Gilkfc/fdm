@@ -52,7 +52,7 @@ public class DataParser {
 			while(br.ready()){
 			line = br.readLine();
 			split = line.split(" ");
-			//System.out.println(graphIndex);
+			System.out.println(graphIndex);
 			for(int i=0;i<split.length;i++){
 				if(!split[i].isEmpty()){
 					if(!split[i].contains(".")){
@@ -79,20 +79,26 @@ public class DataParser {
 				
 	}
 	
-	public void writer(){
-		{		
-	        try {
-				File file = new File("parse " + graphIndex + ".txt");
-				FileWriter fileWriter = new FileWriter(file);
-				BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-				bufferedWriter.write(data);
-				bufferedWriter.close();
-				//graphIndex++;
-				//data = "";
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+	public void writer(int initial, int end){
+		{	
+			
+			for(int i = initial;i<=end;i++)
+			{
+				data = frameList.get(i).print();
+				try {
+					File file = new File("frame " + i + ".txt");
+					FileWriter fileWriter = new FileWriter(file);
+					BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+					bufferedWriter.write(data);
+					bufferedWriter.close();
+					//graphIndex++;
+					data = "";
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
+	        
 	    }
 	}
 	
