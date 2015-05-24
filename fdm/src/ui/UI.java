@@ -20,6 +20,11 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
+import java.awt.Panel;
+import java.awt.Button;
+import java.awt.Color;
+import javax.swing.JTextPane;
+import com.jgoodies.forms.factories.DefaultComponentFactory;
 
 public class UI {
 
@@ -59,7 +64,7 @@ public class UI {
 		frmFdm = new JFrame();
 		frmFdm.setResizable(false);
 		frmFdm.setTitle("fdm\r\n");
-		frmFdm.setBounds(100, 100, 191, 231);
+		frmFdm.setBounds(100, 100, 268, 231);
 		frmFdm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		JMenuBar menuBar = new JMenuBar();
@@ -84,17 +89,34 @@ public class UI {
 		
 		JButton btnFrame = new JButton("Frames");
 		
+		JLabel lblInitialFrame = new JLabel("Initial Frame");
+		lblInitialFrame.setBounds(39, 45, 86, 14);
+		frmFdm.getContentPane().add(lblInitialFrame);
+		
+		JLabel lblFinalFrame = new JLabel("Final Frame");
+		lblFinalFrame.setBounds(39, 87, 86, 14);
+		frmFdm.getContentPane().add(lblFinalFrame);
+		
+		JTextPane textPane = new JTextPane();
+		textPane.setEditable(false);
+		textPane.setBounds(146, 11, 106, 30);
+		frmFdm.getContentPane().add(textPane);
+		
 		JButton btnParse = new JButton("Parse");
-		btnParse.setBounds(50, 11, 86, 23);
+		btnParse.setBounds(36, 11, 86, 23);
 		btnParse.addActionListener(new ActionListener() 
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-
+				textPane.setBackground(Color.RED);
+				textPane.setText("Wait for parse to complete");
 				dp.Parse();
 				initialFrameTxt.setEnabled(true);
 				finalFrameTxt.setEnabled(true);
 				btnFrame.setEnabled(true);
+				btnParse.setEnabled(false);
+				textPane.setBackground(Color.GREEN);
+				textPane.setText("Parse complete");
 				
 			}
 		});
@@ -103,13 +125,13 @@ public class UI {
 		
 		initialFrameTxt = new JTextField();
 		initialFrameTxt.setEnabled(false);
-		initialFrameTxt.setBounds(50, 68, 86, 20);
+		initialFrameTxt.setBounds(39, 59, 86, 20);
 		frmFdm.getContentPane().add(initialFrameTxt);
 		initialFrameTxt.setColumns(10);
 		
 		finalFrameTxt = new JTextField();
 		finalFrameTxt.setEnabled(false);
-		finalFrameTxt.setBounds(50, 110, 86, 20);
+		finalFrameTxt.setBounds(39, 101, 86, 20);
 		frmFdm.getContentPane().add(finalFrameTxt);
 		finalFrameTxt.setColumns(10);
 		
@@ -119,20 +141,20 @@ public class UI {
 		{
 			public void actionPerformed(ActionEvent e) 
 			{
+				textPane.setBackground(Color.RED);
+				textPane.setText("Wait for the files to be created");
 				dp.writer(Integer.parseInt(initialFrameTxt.getText()), Integer.parseInt(finalFrameTxt.getText()));
+				textPane.setBackground(Color.GREEN);
+				textPane.setText("Files created");
 			}
 		});
-		btnFrame.setBounds(47, 141, 89, 23);
+		btnFrame.setBounds(36, 132, 89, 23);
 		frmFdm.getContentPane().add(btnFrame);
 		
-		JLabel lblInitialFrame = new JLabel("Initial Frame");
-		lblInitialFrame.setEnabled(false);
-		lblInitialFrame.setBounds(50, 54, 86, 14);
-		frmFdm.getContentPane().add(lblInitialFrame);
+		JLabel lblPrealphaVersion = DefaultComponentFactory.getInstance().createLabel("pre-alpha version");
+		lblPrealphaVersion.setBounds(160, 150, 92, 14);
+		frmFdm.getContentPane().add(lblPrealphaVersion);
 		
-		JLabel lblFinalFrame = new JLabel("Final Frame");
-		lblFinalFrame.setEnabled(false);
-		lblFinalFrame.setBounds(50, 96, 86, 14);
-		frmFdm.getContentPane().add(lblFinalFrame);
+		
 	}
 }

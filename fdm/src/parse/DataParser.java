@@ -1,6 +1,7 @@
 package parse;
 
 import graphUtil.Frame;
+import graphUtil.GraphMLGenerator;
 import graphUtil.Player;
 
 import java.io.BufferedReader;
@@ -97,6 +98,9 @@ public class DataParser {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
+				
+				GraphMLGenerator gml = new GraphMLGenerator(frameList.get(i).createGraph(),frameList.get(i).getIndex());
+				gml.generateGraphML();
 			}
 	        
 	    }

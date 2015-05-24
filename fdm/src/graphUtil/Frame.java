@@ -3,11 +3,16 @@ package graphUtil;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.tinkerpop.blueprints.Graph;
+import com.tinkerpop.blueprints.Vertex;
+import com.tinkerpop.blueprints.impls.tg.TinkerGraph;
+
 public class Frame {
 	
 	protected int index;
 	List<Player> playerList = new ArrayList<Player>();
 	protected int playerIndex = 1;
+	Graph graph = new TinkerGraph();
 	
 	String testText = "";
 	
@@ -21,6 +26,29 @@ public class Frame {
 		p.setNumber(playerIndex);
 		playerList.add(p);
 		playerIndex++;
+	}
+	
+	public int getIndex()
+	{
+		return this.index;
+	}
+	
+	public Graph createGraph()
+	{
+		for(int i = 0; i<playerList.size();i++)
+		{
+			addPlayerVertex(playerList.get(i));
+		}
+		
+		return graph;
+	}
+	
+	public void addPlayerVertex(Player p)
+	{
+		Vertex v = this.graph.addVertex(null);
+		v.setProperty("number", p.getNumber());
+		v.setProperty("x", p.getxPosition());
+		v.setProperty("y", p.getyPosition());
 	}
 	
 	public String print()
