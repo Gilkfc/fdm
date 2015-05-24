@@ -103,6 +103,6 @@ public class DataParser {
 	public void printFrame()
 	{
 		String test = JOptionPane.showInputDialog("Frame");
-		frameList.get(Integer.parseInt(test)).print();
+		frameList.get(Integer.parseInt(test)-1).print();
 	}
 }
