@@ -24,7 +24,7 @@ import java.awt.Panel;
 import java.awt.Button;
 import java.awt.Color;
 import javax.swing.JTextPane;
-import com.jgoodies.forms.factories.DefaultComponentFactory;
+
 
 public class UI {
 
@@ -150,11 +150,6 @@ public class UI {
 		});
 		btnFrame.setBounds(36, 132, 89, 23);
 		frmFdm.getContentPane().add(btnFrame);
-		
-		JLabel lblPrealphaVersion = DefaultComponentFactory.getInstance().createLabel("pre-alpha version");
-		lblPrealphaVersion.setBounds(160, 150, 92, 14);
-		frmFdm.getContentPane().add(lblPrealphaVersion);
-		
-		
+	
 	}
 }
