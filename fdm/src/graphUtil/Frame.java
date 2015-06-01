@@ -12,18 +12,28 @@ public class Frame {
 	protected int index;
 	List<Player> playerList = new ArrayList<Player>();
 	protected int playerIndex = 1;
+	boolean t1C;
 	Graph graph = new TinkerGraph();
 	
 	String testText = "";
 	
-	public Frame (int i)
+	public Frame (int i, boolean tC)
 	{
 		this.index = i;
+		this.t1C = tC;	
 	}
 	
 	public void addPlayer (Player p)
 	{
 		p.setNumber(playerIndex);
+		if(t1C)
+		{
+			if(playerIndex < 15) p.setTeam(Team.Considered); else p.setTeam(Team.NotConsidered);			
+		}
+		else
+		{
+			if(playerIndex < 15) p.setTeam(Team.NotConsidered); else p.setTeam(Team.Considered);
+		}
 		playerList.add(p);
 		playerIndex++;
 	}
@@ -49,17 +59,8 @@ public class Frame {
 		v.setProperty("number", p.getNumber());
 		v.setProperty("x", p.getxPosition());
 		v.setProperty("y", p.getyPosition());
+		v.setProperty("team", p.getTeam());
 	}
 	
-	public String print()
-	{
-		testText = "Frame #" + index + "\r\n";
-		for(int i = 0; i<playerList.size();i++)
-		{
-			testText = testText + "Player " + playerList.get(i).getNumber() + "\r\n";
-			testText = testText + "x: " + playerList.get(i).getxPosition() + " y: " + playerList.get(i).getyPosition() + "\r\n";
-		}
-		
-		return testText;
-	}
+
 }

@@ -13,10 +13,10 @@ public class Main {
 		
 		DataParser dp = new DataParser();
 		File file = new File("C:\\Users\\Gil\\Desktop\\TCC\\CapSpoT1Suav (1).2d");
-		
-		dp.sourceReader(file);
+		dp.teamConsidered();
+		/*dp.sourceReader(file);
 		dp.Parse();
-		dp.printFrame();
+		dp.printFrame();*/
 		
 	}
 

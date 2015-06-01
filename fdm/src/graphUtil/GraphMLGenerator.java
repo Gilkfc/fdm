@@ -29,9 +29,11 @@ public class GraphMLGenerator
 		vertexKeyTypes.put("number", GraphMLTokens.INT);
 		vertexKeyTypes.put("xPosition", GraphMLTokens.FLOAT);
 		vertexKeyTypes.put("yPosition", GraphMLTokens.FLOAT);
+		vertexKeyTypes.put("team",GraphMLTokens.STRING);
 		
 		GraphMLWriter writer = new GraphMLWriter(graph);
 		writer.setVertexKeyTypes(vertexKeyTypes);
+		
 		writer.setNormalize(true);
 		try {
 			writer.outputGraph(filename);
