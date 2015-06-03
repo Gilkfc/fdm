@@ -2,10 +2,11 @@ package graphUtil;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import com.tinkerpop.blueprints.Graph;
+import org.graphstream.graph.Graph;
+import org.graphstream.graph.implementations.SingleGraph;
 import com.tinkerpop.blueprints.Vertex;
 import com.tinkerpop.blueprints.impls.tg.TinkerGraph;
+
 
 public class Frame {
 	
@@ -13,7 +14,8 @@ public class Frame {
 	List<Player> playerList = new ArrayList<Player>();
 	protected int playerIndex = 1;
 	boolean t1C;
-	Graph graph = new TinkerGraph();
+	TinkerGraph graph = new TinkerGraph();
+	Graph dude = new SingleGraph("I can see dead pixels");
 	
 	String testText = "";
 	
@@ -43,7 +45,7 @@ public class Frame {
 		return this.index;
 	}
 	
-	public Graph createGraph()
+	public TinkerGraph createGraph()
 	{
 		for(int i = 0; i<playerList.size();i++)
 		{

@@ -1,30 +1,24 @@
 package ui;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.EventQueue;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 
+import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JTextField;
+import javax.swing.JTextPane;
 
 import parse.DataParser;
-import javax.swing.JButton;
-import java.awt.BorderLayout;
-import javax.swing.JPanel;
-import java.awt.FlowLayout;
-import java.awt.GridLayout;
-import javax.swing.JTextField;
-import javax.swing.JLabel;
-import java.awt.Panel;
-import java.awt.Button;
-import java.awt.Color;
-import javax.swing.JTextPane;
-import com.jgoodies.forms.factories.DefaultComponentFactory;
+
 
 public class UI {
 
@@ -149,12 +143,6 @@ public class UI {
 			}
 		});
 		btnFrame.setBounds(36, 132, 89, 23);
-		frmFdm.getContentPane().add(btnFrame);
-		
-		JLabel lblPrealphaVersion = DefaultComponentFactory.getInstance().createLabel("pre-alpha version");
-		lblPrealphaVersion.setBounds(160, 150, 92, 14);
-		frmFdm.getContentPane().add(lblPrealphaVersion);
-		
-		
+		frmFdm.getContentPane().add(btnFrame);		
 	}
 }
