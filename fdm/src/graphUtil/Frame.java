@@ -1,9 +1,13 @@
 package graphUtil;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
 import org.graphstream.graph.Graph;
+import org.graphstream.graph.Node;
 import org.graphstream.graph.implementations.SingleGraph;
+
 import com.tinkerpop.blueprints.Vertex;
 import com.tinkerpop.blueprints.impls.tg.TinkerGraph;
 
@@ -14,8 +18,8 @@ public class Frame {
 	List<Player> playerList = new ArrayList<Player>();
 	protected int playerIndex = 1;
 	boolean t1C;
-	TinkerGraph graph = new TinkerGraph();
-	Graph dude = new SingleGraph("I can see dead pixels");
+	TinkerGraph tinkerGraph = new TinkerGraph();
+	Graph graphStream = new SingleGraph(Integer.toString(index));
 	
 	String testText = "";
 	
@@ -45,24 +49,48 @@ public class Frame {
 		return this.index;
 	}
 	
-	public TinkerGraph createGraph()
+	public TinkerGraph createTinkerGraph()
 	{
 		for(int i = 0; i<playerList.size();i++)
 		{
-			addPlayerVertex(playerList.get(i));
+			addPlrVrtxTinkerGraph(playerList.get(i));
 		}
 		
-		return graph;
+		return tinkerGraph;
 	}
 	
-	public void addPlayerVertex(Player p)
+	public void addPlrVrtxTinkerGraph(Player p)
 	{
-		Vertex v = this.graph.addVertex(null);
+		Vertex v = this.tinkerGraph.addVertex(null);
 		v.setProperty("number", p.getNumber());
 		v.setProperty("x", p.getxPosition());
 		v.setProperty("y", p.getyPosition());
 		v.setProperty("team", p.getTeam());
 	}
+	
+	public Graph createGraphStream()
+	{
+		for(int i=0; i<playerList.size();i++)
+		{
+			Player plr = playerList.get(i);
+			String id = Integer.toString(plr.getNumber());
+			if(plr.getxPosition() != -9999.0000)
+			{
+			graphStream.addNode(id);			
+			Node n = graphStream.getNode(id);
+			n.addAttribute("ui.label", plr.number);
+			n.addAttribute("z_level", 0);
+			n.addAttribute("xyz",plr.getxPosition(),plr.getyPosition(),0);
+			n.addAttribute("Team", plr.getTeam());
+			//System.out.println(graphStream.getNode(id).getAttribute("xyz").toString());
+			}
+		}
+		
+		return graphStream;
+		
+	}
+	
+
 	
 
 }
