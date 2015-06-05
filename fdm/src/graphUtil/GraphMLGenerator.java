@@ -42,6 +42,8 @@ public class GraphMLGenerator
 			e.printStackTrace();
 		}
 		
+		graph.shutdown();
+		
 	}
 	
 	

@@ -138,6 +138,7 @@ public class UI {
 				textPane.setBackground(Color.RED);
 				textPane.setText("Wait for the files to be created");
 				dp.writer(Integer.parseInt(initialFrameTxt.getText()), Integer.parseInt(finalFrameTxt.getText()));
+				dp.dude();
 				textPane.setBackground(Color.GREEN);
 				textPane.setText("Files created");
 			}

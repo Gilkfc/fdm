@@ -2,6 +2,7 @@ package parse;
 
 import graphUtil.Frame;
 import graphUtil.GraphMLGenerator;
+import graphUtil.GraphViewer;
 import graphUtil.Player;
 
 import java.io.BufferedReader;
@@ -11,9 +12,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.JButton;
-import javax.swing.JDialog;
 import javax.swing.JOptionPane;
+
+import org.graphstream.graph.Graph;
 
 public class DataParser {
 
@@ -100,11 +101,22 @@ public class DataParser {
 			
 			for(int i = initial;i<=end;i++)
 			{				
-				GraphMLGenerator gml = new GraphMLGenerator(frameList.get(i).createGraph(),frameList.get(i).getIndex());
+				GraphMLGenerator gml = new GraphMLGenerator(frameList.get(i).createTinkerGraph(),frameList.get(i).getIndex());
 				gml.generateGraphML();
 			}
 	        
 	    }
+	}
+	
+	public void dude()
+	{
+		
+		Graph g = frameList.get(1).createGraphStream();
+		GraphViewer gv = null;
+		gv.main(g);
+		
+		g = frameList.get(10000).createGraphStream();
+		GraphViewer.main(g);
 	}
 	
 	/*
