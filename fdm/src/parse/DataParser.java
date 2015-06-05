@@ -16,6 +16,8 @@ import javax.swing.JOptionPane;
 
 import org.graphstream.graph.Graph;
 
+import animationPack.AnimationBuilder;
+
 public class DataParser {
 
 	BufferedReader br;
@@ -26,7 +28,8 @@ public class DataParser {
 	int graphIndex;
 	boolean team1C = true;
 	List<Frame> frameList = new ArrayList<Frame>();
-
+	List<String> screenShotPathList = new ArrayList<String>();
+	AnimationBuilder ab = new AnimationBuilder();
 
 	/*
 	 * Not all GraphMLs need to be created. The user now will be prompted for a input with the range
@@ -131,10 +134,16 @@ public class DataParser {
 		{
 			g = frameList.get(i).createGraphStream();
 			GraphViewer.main(g);
-		}	
-
-
-
+			String ss = frameList.get(i).getScreenShotPath();
+			screenShotPathList.add("C:\\Users\\Gil\\git\\fdm\\fdm\\" + ss);
+		}
+	}
+	
+	public void dude()
+	{
+		ab.setOutputFilenamePath("ohboy.mpeg");
+		ab.setJpegFilePathList(screenShotPathList);
+		ab.convertJpegFramesToMpegVideo();
 	}
 
 	/*

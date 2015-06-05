@@ -162,6 +162,7 @@ public class UI {
 				dp.graphVisualizer(Integer.parseInt(initialFrameTxt.getText()), Integer.parseInt(finalFrameTxt.getText()));
 				textPane.setBackground(Color.GREEN);
 				textPane.setText("Files created");
+				dp.dude();
 			}
 		});
 		btnFrame.setBounds(36, 167, 89, 23);

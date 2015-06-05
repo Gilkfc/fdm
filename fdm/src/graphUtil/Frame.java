@@ -23,13 +23,13 @@ public class Frame {
 	boolean t1C;
 	TinkerGraph tinkerGraph = new TinkerGraph();
 	Graph graphStream = new MultiGraph(Integer.toString(index));
-
-	String testText = "";
-
+	String screenShotPath = "";
+	
 	public Frame (int i, boolean tC)
 	{
 		this.index = i;
-		this.t1C = tC;	
+		this.t1C = tC;
+		this.screenShotPath = "screenshots\\ss" + index + ".jpg";
 	}
 
 	public void addPlayer (Player p)
@@ -124,9 +124,14 @@ public class Frame {
 		graphStream.addEdge("A5", 5, 9);
 		graphStream.addEdge("A6", 7, 9);
 		graphStream.addEdge("A7", 3, 9);
-		graphStream.addAttribute("ui.screenshot", "screenshots\\ss" + index + ".jpg");
+		graphStream.addAttribute("ui.screenshot", screenShotPath);
 		return graphStream;
 
+	}
+	
+	public String getScreenShotPath()
+	{
+		return this.screenShotPath;
 	}
 
 

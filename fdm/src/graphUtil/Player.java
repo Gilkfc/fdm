@@ -62,7 +62,6 @@ public class Player {
 	
 	public void isBallCarrier(){
 		this.ballCarrier = true;
-		System.out.println("player " + this.number + " is ball carrier");
 	}
 
 
