@@ -1,12 +1,11 @@
 package graphUtil;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.graphstream.graph.Graph;
 import org.graphstream.graph.Node;
-import org.graphstream.graph.implementations.SingleGraph;
+import org.graphstream.graph.implementations.MultiGraph;
 
 import com.tinkerpop.blueprints.Vertex;
 import com.tinkerpop.blueprints.impls.tg.TinkerGraph;
@@ -19,7 +18,7 @@ public class Frame {
 	protected int playerIndex = 1;
 	boolean t1C;
 	TinkerGraph tinkerGraph = new TinkerGraph();
-	Graph graphStream = new SingleGraph(Integer.toString(index));
+	Graph graphStream = new MultiGraph(Integer.toString(index));
 	
 	String testText = "";
 	
@@ -70,24 +69,48 @@ public class Frame {
 	
 	public Graph createGraphStream()
 	{
+		String styleSheet = "node {"+
+				   " fill-color: red;"+
+				   "}"+
+				   "node.considered {"+
+				   " fill-color: green;"+
+				   "}";
+		
+		graphStream.addAttribute("ui.stylesheet", styleSheet);
+		
 		for(int i=0; i<playerList.size();i++)
 		{
 			Player plr = playerList.get(i);
 			String id = Integer.toString(plr.getNumber());
+			
 			if(plr.getxPosition() != -9999.0000)
 			{
-			graphStream.addNode(id);			
-			Node n = graphStream.getNode(id);
+			graphStream.addNode(id);
+			System.out.println(id);
+			Node n = graphStream.getNode(id);			
 			n.addAttribute("ui.label", plr.number);
 			n.addAttribute("z_level", 0);
 			n.addAttribute("xyz",plr.getxPosition(),plr.getyPosition(),0);
-			n.addAttribute("Team", plr.getTeam());
+			if(plr.getTeam() == Team.Considered)
+			{
+				n.addAttribute("ui.class", "considered");
+			}
+			//n.addAttribute("Team", plr.getTeam());
 			//System.out.println(graphStream.getNode(id).getAttribute("xyz").toString());
 			}
+	
 		}
 		
-		return graphStream;
+		graphStream.addEdge("A1", 1, 2);
+		graphStream.addEdge("A2", 4, 6);
+		graphStream.addEdge("A3", 2, 7);
+		graphStream.addEdge("A4", 8, 10);
+		graphStream.addEdge("A5", 5, 9);
+		graphStream.addEdge("A6", 7, 9);
+		graphStream.addEdge("A7", 3, 9);
 		
+		return graphStream;
+		 
 	}
 	
 

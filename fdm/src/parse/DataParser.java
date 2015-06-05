@@ -114,6 +114,9 @@ public class DataParser {
 		Graph g = frameList.get(1).createGraphStream();
 		GraphViewer gv = null;
 		gv.main(g);
+		
+		g = frameList.get(10000).createGraphStream();
+		GraphViewer.main(g);
 	}
 	
 	/*
