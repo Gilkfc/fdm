@@ -1,11 +1,22 @@
 package graphUtil;
 
 public class Player {
-	
+
 	protected int number;
 	protected float xPosition, yPosition;
 	protected Team team;
+	protected boolean ballCarrier = false;
 
+	/**
+	 * Contains information of a single player. Aside from x,y coordinates, it can store the number (which should
+	 * be unique per player) and which team he belongs to
+	 * 
+	 * The team can be Consideredm ot NotConsidered. Which is determined by the user.
+	 * 
+	 * @param x the position on the x-axis
+ 	 * @param y the position on the y-axis
+	 */
+	
 
 	public Player (float x, float y)
 	{
@@ -36,7 +47,7 @@ public class Player {
 	public void setyPosition(float yPosition) {
 		this.yPosition = yPosition;
 	}	
-	
+
 	public Team getTeam() {
 		return team;
 	}
@@ -45,6 +56,15 @@ public class Player {
 		this.team = team;
 	}
 	
+	public boolean getBallCarrier(){
+		return ballCarrier;
+	}
 	
+	public void isBallCarrier(){
+		this.ballCarrier = true;
+		System.out.println("player " + this.number + " is ball carrier");
+	}
+
+
 
 }

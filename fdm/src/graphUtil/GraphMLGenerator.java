@@ -14,40 +14,45 @@ public class GraphMLGenerator
 
 	Graph graph = new TinkerGraph();
 	int index;
-		
+
 	public GraphMLGenerator (Graph g, int i)
 	{
 		graph = g;
 		index = i;
 	}
-		
+
+
+	/**
+	 *  Creates a graphML file with the data of all players on a frame.
+	 */
 	
 	public void generateGraphML()
 	{
-		String filename = "Frame" + (index-1) +".graphml";
+		String filename = "Frame" + (index) +".graphml";
 		Map<String, String> vertexKeyTypes = new HashMap<String, String>();
 		vertexKeyTypes.put("number", GraphMLTokens.INT);
 		vertexKeyTypes.put("xPosition", GraphMLTokens.FLOAT);
 		vertexKeyTypes.put("yPosition", GraphMLTokens.FLOAT);
 		vertexKeyTypes.put("team",GraphMLTokens.STRING);
-		
+		vertexKeyTypes.put("ballCarrier", GraphMLTokens.BOOLEAN);
+
 		GraphMLWriter writer = new GraphMLWriter(graph);
 		writer.setVertexKeyTypes(vertexKeyTypes);
-		
+
 		writer.setNormalize(true);
 		try {
-			writer.outputGraph(filename);
+			writer.outputGraph("graphML\\" + filename);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		graph.shutdown();
-		
-	}
-	
-	
-	
 
-	
+		graph.shutdown();
+
+	}
+
+
+
+
+
 }

@@ -26,15 +26,15 @@ public class DataParser {
 	int graphIndex;
 	boolean team1C = true;
 	List<Frame> frameList = new ArrayList<Frame>();
-	
-		
+
+
 	/*
 	 * Not all GraphMLs need to be created. The user now will be prompted for a input with the range
 	 * of frames he needs.
 	 * 
 	 * And also asked which team we'll take into consideration
 	 */	
-	
+
 	public void sourceReader(File file)
 	{
 		try {
@@ -45,7 +45,7 @@ public class DataParser {
 		}
 
 	}
-	
+
 	public void teamConsidered()
 	{
 		Object[] options = {"Team 1","Team 2"};
@@ -56,73 +56,91 @@ public class DataParser {
 				null,
 				options,
 				options[1]);
-		
+
 		if(n==1) team1C = false;		
 	}
-	
-	public void Parse()
+
+	public void dataParser()
 	{		
 		teamConsidered();
 		try {
 			while(br.ready()){
-			line = br.readLine();
-			split = line.split(" ");
-			//System.out.println(graphIndex);
-			for(int i=0;i<split.length;i++){
-				if(!split[i].isEmpty()){
-					if(!split[i].contains(".")){
-						//data = data + "Grafo:" + split[i] + "\r\n";
-						graphIndex = Integer.parseInt(split[i]);
-						frameList.add(new Frame(graphIndex,team1C));
-						
-					}else{
-						frameList.get(graphIndex-1).addPlayer(
-								new Player(Float.valueOf(split[i]),Float.valueOf(split[i+1])));
-						//data = data + "Jogador " + plcnt + " x:" + split[i] + " y:" + split[i+1] + "\r\n";
-						//plcnt++;
-						i++;
+				line = br.readLine();
+				split = line.split(" ");
+				for(int i=0;i<split.length;i++){
+					if(!split[i].isEmpty()){
+						if(!split[i].contains(".")){
+							graphIndex = Integer.parseInt(split[i]);
+							frameList.add(new Frame(graphIndex,team1C));
+
+						}else{
+							frameList.get(graphIndex-1).addPlayer(
+									new Player(Float.valueOf(split[i]),Float.valueOf(split[i+1])));
+							i++;
+						}
 					}
 				}
+
 			}
-			//writer();
-			//System.out.println(data);
-			//data = "";
-			}
+			br.close();
 		} catch (IOException e) {
-			
+
 			e.printStackTrace();
-		}	
-				
+		}
+		
+
 	}
 	
+	public void scoutParser()
+	{
+		try {
+			while(br.ready()){
+				line = br.readLine();
+				split = line.split(" ");
+				if(split[4].equals("0") && split[5].equals("1"))
+				{
+							frameList.get(Integer.parseInt(split[0])).determineBallCarrier(Integer.parseInt(split[1]));
+						}
+				}			
+			br.close();
+		} catch (IOException e) {
+
+			e.printStackTrace();
+		}
+	}
+
 	public void writer(int initial, int end)
 	{
 		{	
-			
-			for(int i = initial;i<=end;i++)
+
+			for(int i = initial-1;i<end;i++)
 			{				
-				GraphMLGenerator gml = new GraphMLGenerator(frameList.get(i).createTinkerGraph(),frameList.get(i).getIndex());
+				GraphMLGenerator gml = new GraphMLGenerator(frameList.get(i).createTinkerGraph(),
+						frameList.get(i).getIndex());
 				gml.generateGraphML();
 			}
-	        
-	    }
+
+		}
 	}
-	
-	public void dude()
+
+	public void graphVisualizer(int initial, int end)
 	{
-		
-		Graph g = frameList.get(1).createGraphStream();
-		GraphViewer gv = null;
-		gv.main(g);
-		
-		g = frameList.get(10000).createGraphStream();
-		GraphViewer.main(g);
+		Graph g = null;
+
+		for(int i = initial-1;i<end;i++)
+		{
+			g = frameList.get(i).createGraphStream();
+			GraphViewer.main(g);
+		}	
+
+
+
 	}
-	
+
 	/*
 	 * This will be used only for testing purposes. 
 	 */	
-	
+
 	public void printFrame()
 	{
 		String test = JOptionPane.showInputDialog("Frame");
