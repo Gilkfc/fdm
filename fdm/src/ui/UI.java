@@ -3,10 +3,15 @@ package ui;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.EventQueue;
+import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -18,8 +23,6 @@ import javax.swing.JTextField;
 import javax.swing.JTextPane;
 
 import parse.DataParser;
-
-import java.awt.Font;
 
 
 public class UI {
@@ -116,9 +119,11 @@ public class UI {
 		textPane.setBounds(146, 11, 106, 30);
 		frmFdm.getContentPane().add(textPane);
 
-		JButton btnParse = new JButton("Parse");
+		JButton btnParse = new JButton("");
+		btnParse.setIcon(new ImageIcon("C:\\Users\\Gil\\Desktop\\Black nigger\\base butn\\parseBtn.png"));
 		btnParse.setBackground(new Color(240, 240, 240));
-		btnParse.setBounds(36, 11, 86, 23);
+		btnParse.setBorderPainted(false);
+		btnParse.setBounds(36, 11, 66, 24);
 		btnParse.addActionListener(new ActionListener() 
 		{
 			public void actionPerformed(ActionEvent e)
@@ -131,6 +136,7 @@ public class UI {
 				finalFrameTxt.setEnabled(true);
 				btnFrame.setEnabled(true);
 				btnParse.setEnabled(false);
+				
 				textPane.setBackground(Color.GREEN);
 				textPane.setText("Parse complete");
 
