@@ -18,6 +18,7 @@ import javax.swing.JTextField;
 import javax.swing.JTextPane;
 
 import parse.DataParser;
+
 import java.awt.Font;
 
 
@@ -29,7 +30,7 @@ public class UI {
 	private JTextField initialFrameTxt;
 	private JTextField finalFrameTxt;
 	JButton btnScout = new JButton("Scout");
-
+	JButton btnVideo = new JButton("Video");
 	/**
 	 * Launch the application.
 	 */
@@ -162,11 +163,22 @@ public class UI {
 				dp.graphVisualizer(Integer.parseInt(initialFrameTxt.getText()), Integer.parseInt(finalFrameTxt.getText()));
 				textPane.setBackground(Color.GREEN);
 				textPane.setText("Files created");
-				dp.dude();
+				btnVideo.setEnabled(true);
 			}
 		});
 		btnFrame.setBounds(36, 167, 89, 23);
 		frmFdm.getContentPane().add(btnFrame);		
+		
+		
+		btnVideo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0)
+			{
+				dp.dude();
+			}
+		});
+		btnVideo.setEnabled(false);
+		btnVideo.setBounds(135, 167, 89, 23);
+		frmFdm.getContentPane().add(btnVideo);
 		
 
 	}

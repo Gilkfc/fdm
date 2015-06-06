@@ -5,6 +5,7 @@ import graphUtil.GraphMLGenerator;
 import graphUtil.GraphViewer;
 import graphUtil.Player;
 
+import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -141,7 +142,12 @@ public class DataParser {
 	
 	public void dude()
 	{
-		ab.setOutputFilenamePath("ohboy.mpeg");
+		/*File imgFile = new File(screenShotPathList.get(1));
+		while (!imgFile.exists())
+		{
+			imgFile = new File(screenShotPathList.get(1));
+		}*/		
+		ab.setOutputFilenamePath("ohboy.wmv");
 		ab.setJpegFilePathList(screenShotPathList);
 		ab.convertJpegFramesToMpegVideo();
 	}
