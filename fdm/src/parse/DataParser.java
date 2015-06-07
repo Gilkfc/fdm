@@ -27,6 +27,7 @@ public class DataParser {
 	String data = "";
 	int plcnt = 1;
 	int graphIndex;
+	int initialFrame,finalFrame;
 	boolean team1C = true;
 	List<Frame> frameList = new ArrayList<Frame>();
 	List<String> screenShotPathList = new ArrayList<String>();
@@ -130,13 +131,14 @@ public class DataParser {
 	public void graphVisualizer(int initial, int end)
 	{
 		Graph g = null;
-
+		initialFrame = initial;
+		finalFrame = end;
 		for(int i = initial-1;i<end;i++)
 		{
 			g = frameList.get(i).createGraphStream();
 			GraphViewer.main(g);
 			String ss = frameList.get(i).getScreenShotPath();
-			screenShotPathList.add("C:\\Users\\Gil\\git\\fdm\\fdm\\" + ss);
+			screenShotPathList.add(ss);
 		}
 	}
 	
@@ -147,7 +149,7 @@ public class DataParser {
 		{
 			imgFile = new File(screenShotPathList.get(1));
 		}*/		
-		ab.setOutputFilenamePath("ohboy.wmv");
+		ab.setOutputFilenamePath("Animation " + initialFrame + "-" + finalFrame + ".wmv");
 		ab.setJpegFilePathList(screenShotPathList);
 		ab.convertJpegFramesToMpegVideo();
 	}

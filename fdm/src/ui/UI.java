@@ -23,6 +23,7 @@ import javax.swing.JTextField;
 import javax.swing.JTextPane;
 
 import parse.DataParser;
+import java.awt.Canvas;
 
 
 public class UI {
@@ -32,8 +33,11 @@ public class UI {
 	File file;
 	private JTextField initialFrameTxt;
 	private JTextField finalFrameTxt;
-	JButton btnScout = new JButton("Scout");
-	JButton btnVideo = new JButton("Video");
+	JButton btnParse = new JButton();
+	JButton btnScout = new JButton();
+	JButton btnFrame = new JButton();
+	JButton btnVideo = new JButton();
+	
 	/**
 	 * Launch the application.
 	 */
@@ -63,7 +67,7 @@ public class UI {
 	private void initialize() {
 		frmFdm = new JFrame();
 		frmFdm.setResizable(false);
-		frmFdm.setTitle("fdm\r\n");
+		frmFdm.setTitle("Football Miner\r\n");
 		frmFdm.setBounds(100, 100, 268, 261);
 		frmFdm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -83,6 +87,7 @@ public class UI {
 				jf.showOpenDialog(frame);
 				file = jf.getSelectedFile();
 				dp.sourceReader(file);
+				btnParse.setEnabled(true);
 			}
 		});
 		mnFile.add(mntmOpen);
@@ -91,6 +96,7 @@ public class UI {
 		btnScout.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
+				//btnScout.setIcon(new ImageIcon("res\\scoutBtnClicked.png"));
 				JFileChooser jf = new JFileChooser(".2d");
 				Component frame = null;
 				jf.showOpenDialog(frame);
@@ -99,44 +105,55 @@ public class UI {
 				dp.scoutParser();
 			}
 		});
+		btnScout.setBorderPainted(false); 
+		btnScout.setContentAreaFilled(false); 
+		btnScout.setFocusPainted(false); 
+		btnScout.setOpaque(false);
+		btnScout.setIcon(new ImageIcon("res\\scoutBtn.png"));
 		btnScout.setEnabled(false);
-		btnScout.setBounds(36, 46, 86, 23);
+		btnScout.setBounds(36, 46, 66, 23);
 		frmFdm.getContentPane().add(btnScout);
 
-		JButton btnFrame = new JButton("Frames");
+		
 
 		JLabel lblInitialFrame = new JLabel("Initial Frame");
+		lblInitialFrame.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		lblInitialFrame.setBounds(39, 80, 86, 14);
 		frmFdm.getContentPane().add(lblInitialFrame);
 
 		JLabel lblFinalFrame = new JLabel("Final Frame");
+		lblFinalFrame.setFont(new Font("Tahoma", Font.PLAIN, 11));
 		lblFinalFrame.setBounds(39, 122, 86, 14);
 		frmFdm.getContentPane().add(lblFinalFrame);
 
 		JTextPane textPane = new JTextPane();
 		textPane.setFont(new Font("Tahoma", Font.PLAIN, 9));
 		textPane.setEditable(false);
-		textPane.setBounds(146, 11, 106, 30);
+		textPane.setBounds(139, 136, 66, 20);
 		frmFdm.getContentPane().add(textPane);
 
-		JButton btnParse = new JButton("");
-		btnParse.setIcon(new ImageIcon("C:\\Users\\Gil\\Desktop\\Black nigger\\base butn\\parseBtn.png"));
+		
+		btnParse.setBorderPainted(false); 
+		btnParse.setContentAreaFilled(false); 
+		btnParse.setFocusPainted(false); 
+		btnParse.setOpaque(false);
+		btnParse.setIcon(new ImageIcon("res\\parseBtn.png"));
+		btnParse.setEnabled(false);
 		btnParse.setBackground(new Color(240, 240, 240));
-		btnParse.setBorderPainted(false);
-		btnParse.setBounds(36, 11, 66, 24);
+		btnParse.setBounds(36, 11, 66, 23);
 		btnParse.addActionListener(new ActionListener() 
 		{
 			public void actionPerformed(ActionEvent e)
 			{
+				btnParse.setIcon(new ImageIcon("res\\parseBtnClicked.png"));
 				textPane.setBackground(Color.RED);
-				textPane.setText("Wait for parse to complete");
+				textPane.setText("Please wait..");
 				dp.dataParser();
 				btnScout.setEnabled(true);
 				initialFrameTxt.setEnabled(true);
 				finalFrameTxt.setEnabled(true);
 				btnFrame.setEnabled(true);
 				btnParse.setEnabled(false);
-				
 				textPane.setBackground(Color.GREEN);
 				textPane.setText("Parse complete");
 
@@ -147,17 +164,22 @@ public class UI {
 
 		initialFrameTxt = new JTextField();
 		initialFrameTxt.setEnabled(false);
-		initialFrameTxt.setBounds(39, 94, 86, 20);
+		initialFrameTxt.setBounds(36, 94, 66, 20);
 		frmFdm.getContentPane().add(initialFrameTxt);
 		initialFrameTxt.setColumns(10);
 
 		finalFrameTxt = new JTextField();
 		finalFrameTxt.setEnabled(false);
-		finalFrameTxt.setBounds(39, 136, 86, 20);
+		finalFrameTxt.setBounds(36, 136, 66, 20);
 		frmFdm.getContentPane().add(finalFrameTxt);
 		finalFrameTxt.setColumns(10);
 
 
+		btnFrame.setBorderPainted(false); 
+		btnFrame.setContentAreaFilled(false); 
+		btnFrame.setFocusPainted(false); 
+		btnFrame.setOpaque(false);
+		btnFrame.setIcon(new ImageIcon("res\\graphBtn.png"));
 		btnFrame.setEnabled(false);
 		btnFrame.addActionListener(new ActionListener()
 		{
@@ -172,19 +194,30 @@ public class UI {
 				btnVideo.setEnabled(true);
 			}
 		});
-		btnFrame.setBounds(36, 167, 89, 23);
+		btnFrame.setBounds(36, 167, 66, 23);
 		frmFdm.getContentPane().add(btnFrame);		
 		
-		
+		btnVideo.setBorderPainted(false); 
+		btnVideo.setContentAreaFilled(false); 
+		btnVideo.setFocusPainted(false); 
+		btnVideo.setOpaque(false);
+		btnVideo.setIcon(new ImageIcon("res\\videoBtn.png"));
 		btnVideo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0)
 			{
 				dp.dude();
 			}
 		});
+		
+		
 		btnVideo.setEnabled(false);
-		btnVideo.setBounds(135, 167, 89, 23);
+		btnVideo.setBounds(135, 167, 66, 23);
 		frmFdm.getContentPane().add(btnVideo);
+		
+		JLabel label = new JLabel("");
+		label.setBounds(132, 21, 120, 105);
+		frmFdm.getContentPane().add(label);
+		label.setIcon(new ImageIcon("res\\FMlogoSmall.png"));
 		
 
 	}
