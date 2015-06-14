@@ -92,6 +92,12 @@ public class UI {
 		});
 		mnFile.add(mntmOpen);
 		
+		JTextPane textPane = new JTextPane();
+		textPane.setFont(new Font("Tahoma", Font.PLAIN, 9));
+		textPane.setEditable(false);
+		textPane.setBounds(139, 136, 66, 20);
+		frmFdm.getContentPane().add(textPane);
+		
 		
 		btnScout.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -102,7 +108,11 @@ public class UI {
 				jf.showOpenDialog(frame);
 				file = jf.getSelectedFile();
 				dp.sourceReader(file);
+				textPane.setBackground(Color.RED);
+				textPane.setText("Please wait..");
 				dp.scoutParser();
+				textPane.setBackground(Color.GREEN);
+				textPane.setText("Parse complete");
 			}
 		});
 		btnScout.setBorderPainted(false); 
@@ -126,13 +136,6 @@ public class UI {
 		lblFinalFrame.setBounds(39, 122, 86, 14);
 		frmFdm.getContentPane().add(lblFinalFrame);
 
-		JTextPane textPane = new JTextPane();
-		textPane.setFont(new Font("Tahoma", Font.PLAIN, 9));
-		textPane.setEditable(false);
-		textPane.setBounds(139, 136, 66, 20);
-		frmFdm.getContentPane().add(textPane);
-
-		
 		btnParse.setBorderPainted(false); 
 		btnParse.setContentAreaFilled(false); 
 		btnParse.setFocusPainted(false); 
@@ -191,6 +194,7 @@ public class UI {
 				dp.graphVisualizer(Integer.parseInt(initialFrameTxt.getText()), Integer.parseInt(finalFrameTxt.getText()));
 				textPane.setBackground(Color.GREEN);
 				textPane.setText("Files created");
+				dp.deleteFrameList();
 				btnVideo.setEnabled(true);
 			}
 		});
@@ -217,7 +221,7 @@ public class UI {
 		JLabel label = new JLabel("");
 		label.setBounds(132, 21, 120, 105);
 		frmFdm.getContentPane().add(label);
-		label.setIcon(new ImageIcon("res\\FMlogoSmall.png"));
+		label.setIcon(new ImageIcon("res\\FMlogoSmall1.png"));
 		
 
 	}

@@ -28,6 +28,7 @@ public class DataParser {
 	int plcnt = 1;
 	int graphIndex;
 	int initialFrame,finalFrame;
+	int initPos, finalPos, ballCarrier;
 	boolean team1C = true;
 	List<Frame> frameList = new ArrayList<Frame>();
 	List<String> screenShotPathList = new ArrayList<String>();
@@ -92,21 +93,29 @@ public class DataParser {
 
 			e.printStackTrace();
 		}
-		
+
 
 	}
-	
+
 	public void scoutParser()
 	{
+		initPos = 1;
+		ballCarrier = 99;
 		try {
 			while(br.ready()){
 				line = br.readLine();
 				split = line.split(" ");
-				if(split[4].equals("0") && split[5].equals("1"))
+				if(split[5].equals("1") && ballCarrier != Integer.parseInt(split[1]))
 				{
-							frameList.get(Integer.parseInt(split[0])).determineBallCarrier(Integer.parseInt(split[1]));
-						}
-				}			
+					finalPos = Integer.parseInt(split[0]);
+					for(int i = initPos; i < finalPos; i++)
+					{
+						frameList.get(i).determineBallCarrier(ballCarrier);
+					}
+					ballCarrier = Integer.parseInt(split[1]);
+					initPos = Integer.parseInt(split[0]);
+				}
+			}			
 			br.close();
 		} catch (IOException e) {
 
@@ -141,7 +150,7 @@ public class DataParser {
 			screenShotPathList.add(ss);
 		}
 	}
-	
+
 	public void dude()
 	{
 		/*File imgFile = new File(screenShotPathList.get(1));
@@ -158,8 +167,8 @@ public class DataParser {
 	 * This will be used only for testing purposes. 
 	 */	
 
-	public void printFrame()
+	public void deleteFrameList()
 	{
-		String test = JOptionPane.showInputDialog("Frame");
+		frameList.clear();
 	}
 }
