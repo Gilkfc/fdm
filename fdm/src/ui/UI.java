@@ -67,7 +67,7 @@ public class UI {
 	private void initialize() {
 		frmFdm = new JFrame();
 		frmFdm.setResizable(false);
-		frmFdm.setTitle("Football Miner\r\n");
+		frmFdm.setTitle("Soccer Miner\r\n");
 		frmFdm.setBounds(100, 100, 268, 261);
 		frmFdm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -102,7 +102,7 @@ public class UI {
 		btnScout.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				
-				//btnScout.setIcon(new ImageIcon("res\\scoutBtnClicked.png"));
+				btnScout.setIcon(new ImageIcon("res\\scoutBtnClick.png"));
 				JFileChooser jf = new JFileChooser(".2d");
 				Component frame = null;
 				jf.showOpenDialog(frame);
@@ -111,8 +111,10 @@ public class UI {
 				textPane.setBackground(Color.RED);
 				textPane.setText("Please wait..");
 				dp.scoutParser();
+				btnFrame.setEnabled(true);
+				btnScout.setEnabled(false);
 				textPane.setBackground(Color.GREEN);
-				textPane.setText("Parse complete");
+				textPane.setText("Complete");
 			}
 		});
 		btnScout.setBorderPainted(false); 
@@ -155,10 +157,10 @@ public class UI {
 				btnScout.setEnabled(true);
 				initialFrameTxt.setEnabled(true);
 				finalFrameTxt.setEnabled(true);
-				btnFrame.setEnabled(true);
+				
 				btnParse.setEnabled(false);
 				textPane.setBackground(Color.GREEN);
-				textPane.setText("Parse complete");
+				textPane.setText("Complete");
 
 			}
 		});
@@ -188,6 +190,7 @@ public class UI {
 		{
 			public void actionPerformed(ActionEvent e) 
 			{
+				btnFrame.setIcon(new ImageIcon("res\\graphBtnClick.png"));
 				textPane.setBackground(Color.RED);
 				textPane.setText("Wait for the files to be created");
 				dp.writer(Integer.parseInt(initialFrameTxt.getText()), Integer.parseInt(finalFrameTxt.getText()));
@@ -195,6 +198,7 @@ public class UI {
 				textPane.setBackground(Color.GREEN);
 				textPane.setText("Files created");
 				dp.deleteFrameList();
+				btnFrame.setEnabled(false);
 				btnVideo.setEnabled(true);
 			}
 		});
@@ -209,7 +213,14 @@ public class UI {
 		btnVideo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0)
 			{
+				btnVideo.setIcon(new ImageIcon("res\\videoBtnClick.png"));
+				textPane.setBackground(Color.RED);
+				textPane.setText("Please wait...");
 				dp.dude();
+				textPane.setBackground(Color.GREEN);
+				textPane.setText("Encoded");
+				btnVideo.setEnabled(false);
+				
 			}
 		});
 		

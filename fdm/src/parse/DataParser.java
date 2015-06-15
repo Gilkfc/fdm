@@ -56,7 +56,7 @@ public class DataParser {
 	{
 		Object[] options = {"Team 1","Team 2"};
 		int n = JOptionPane.showOptionDialog(null,"Which team will be considered on the data?",
-				"A Silly Question",
+				"Soccer Miner",
 				JOptionPane.YES_NO_OPTION,
 				JOptionPane.QUESTION_MESSAGE,
 				null,
