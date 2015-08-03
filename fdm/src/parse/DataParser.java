@@ -5,7 +5,6 @@ import graphUtil.GraphMLGenerator;
 import graphUtil.GraphViewer;
 import graphUtil.Player;
 
-import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -17,6 +16,7 @@ import javax.swing.JOptionPane;
 
 import org.graphstream.graph.Graph;
 
+import ui.TabbedGraphs;
 import animationPack.AnimationBuilder;
 
 public class DataParser {
@@ -137,7 +137,7 @@ public class DataParser {
 		}
 	}
 
-	public void graphVisualizer(int initial, int end)
+	public void graphVisualizer(int initial, int end, TabbedGraphs tb)
 	{
 		Graph g = null;
 		initialFrame = initial;
@@ -145,13 +145,14 @@ public class DataParser {
 		for(int i = initial-1;i<end;i++)
 		{
 			g = frameList.get(i).createGraphStream();
-			GraphViewer.main(g);
+			//GraphViewer.main(g);
+			tb.insertGraphStream(g, i);
 			String ss = frameList.get(i).getScreenShotPath();
 			screenShotPathList.add(ss);
 		}
 	}
 
-	public void dude()
+	public void convertAnimation()
 	{
 		/*File imgFile = new File(screenShotPathList.get(1));
 		while (!imgFile.exists())

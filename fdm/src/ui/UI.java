@@ -30,6 +30,7 @@ public class UI {
 
 	private JFrame frmFdm;
 	DataParser dp = new DataParser();
+	TabbedGraphs tb;
 	File file;
 	private JTextField initialFrameTxt;
 	private JTextField finalFrameTxt;
@@ -194,9 +195,13 @@ public class UI {
 				textPane.setBackground(Color.RED);
 				textPane.setText("Wait for the files to be created");
 				dp.writer(Integer.parseInt(initialFrameTxt.getText()), Integer.parseInt(finalFrameTxt.getText()));
-				dp.graphVisualizer(Integer.parseInt(initialFrameTxt.getText()), Integer.parseInt(finalFrameTxt.getText()));
+				tb = new TabbedGraphs(Integer.parseInt(initialFrameTxt.getText()), Integer.parseInt(finalFrameTxt.getText()), null);
+				tb.setVisible(true);
+				tb.setSize(1000, 1000);
+				tb.createJFrames();
+				dp.graphVisualizer(Integer.parseInt(initialFrameTxt.getText()), Integer.parseInt(finalFrameTxt.getText()), tb);
 				textPane.setBackground(Color.GREEN);
-				textPane.setText("Files created");
+				textPane.setText("Files created");				
 				dp.deleteFrameList();
 				btnFrame.setEnabled(false);
 				btnVideo.setEnabled(true);
@@ -216,7 +221,7 @@ public class UI {
 				btnVideo.setIcon(new ImageIcon("res\\videoBtnClick.png"));
 				textPane.setBackground(Color.RED);
 				textPane.setText("Please wait...");
-				dp.dude();
+				dp.convertAnimation();
 				textPane.setBackground(Color.GREEN);
 				textPane.setText("Encoded");
 				btnVideo.setEnabled(false);
