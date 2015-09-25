@@ -122,7 +122,7 @@ public class GUI
 	}
 	
 	public static File loadFile(){
-		JFileChooser fileChooser = new JFileChooser(".2d");
+		JFileChooser fileChooser = new JFileChooser();
 		FileFilter filter = new FileNameExtensionFilter(".2d Data File", new String[] {"2d"});
 		fileChooser.setFileFilter(filter);
 		Component temp = null;
