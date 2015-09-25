@@ -21,8 +21,11 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
 import parse.DataParser;
+
 import java.awt.Canvas;
 
 
@@ -66,6 +69,22 @@ public class UI {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		String className = UIManager.getSystemLookAndFeelClassName();
+		try {
+			UIManager.setLookAndFeel(className);
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InstantiationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (UnsupportedLookAndFeelException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		frmFdm = new JFrame();
 		frmFdm.setResizable(false);
 		frmFdm.setTitle("Soccer Miner\r\n");

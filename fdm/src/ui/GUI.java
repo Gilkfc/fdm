@@ -1,108 +1,133 @@
 package ui;
 
-import java.awt.BorderLayout;
-import java.awt.Container;
-import java.awt.Image;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
-import java.io.IOException;
 
-import javax.imageio.ImageIO;
-import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.filechooser.FileFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
-public class GUI extends JFrame
+import parse.DataParser;
+import bibliothek.gui.dock.common.CControl;
+import bibliothek.gui.dock.common.CLocation;
+import bibliothek.gui.dock.common.DefaultSingleCDockable;
+import bibliothek.gui.dock.common.SingleCDockable;
+
+
+public class GUI
 {
+	static File graphData;
+	File scoutData;
+	static DataParser dp = new DataParser();
 	
-	JButton btnParse = new JButton();
-	JButton btnScout = new JButton();
-	JButton btnGraph = new JButton();
-	JButton btnVideo = new JButton();
-
-	public GUI()
+	public static void main(String[] args)
 	{
-
-		super("Football Miner");
-		
-		try
-		{
-			Image btnParseImg = ImageIO.read(new File("res\\parseBtn.png"));
-			btnParse.setIcon(new ImageIcon(btnParseImg));
+		String className = UIManager.getSystemLookAndFeelClassName();
+		try {
+			UIManager.setLookAndFeel(className);
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InstantiationException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (UnsupportedLookAndFeelException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		catch (IOException e)
+		JFrame jf = new JFrame("Soccer Miner");
+		jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		JMenuBar menuBar = new JMenuBar();
+		jf.setJMenuBar(menuBar);
+		JMenu menuFile = new JMenu("File");
+		menuBar.add(menuFile);
+		
+		JMenuItem mntmOpen = new JMenuItem("Load Files");
+		menuFile.add(mntmOpen);
+		mntmOpen.addActionListener(new ActionListener()
 		{
-			System.out.println("Couldn't find parseBtn.png");
+			public void actionPerformed(ActionEvent e)
+			{
+				//TODO Flie Choosing shenanigans. Prolly do both choosings in sequence
+				/*
+				 * Still need to figure out how to exacly do this
+				 */
+			}
+		});
+		
+		CControl control = new CControl(jf);
+		jf.setLayout(new GridLayout(1,1));
+		jf.add(control.getContentArea());
+		
+		SingleCDockable red = create("red", Color.RED); 		// Will contain the visualizations
+		SingleCDockable green = create("green", Color.GREEN);	// Will contain the graph tree. I still nee to see how I'm doing this
+		SingleCDockable blue = create("blue", Color.BLUE);		// Will contain available actions. probably.
+		SingleCDockable yellow = create("cyan", Color.CYAN);	// Will show data or graphics or something else.
+		
+		control.addDockable(red);
+		control.addDockable(green);
+		control.addDockable(blue);
+		control.addDockable(yellow);
+		
+		red.setVisible(true);
+		yellow.setVisible(true);
+		
+		green.setLocation(CLocation.base().normalSouth(0.4));
+		green.setVisible(true);
+		
+		blue.setLocation(CLocation.base().normalEast(0.3));
+		blue.setVisible(true);
+		
+		jf.setBounds(20,20,400,400);
+		jf.setVisible(true);
+	}
+	
+	public static SingleCDockable create(String title, Color color){
+		JPanel background = new JPanel();
+		background.setOpaque(true);
+		background.setBackground(color);
+		switch(title){
+		case "red":
+			background.add(new JButton("Maybe Graphs"));
+			break;
+		case "green":
+			background.add(new JButton("the graphs"));
+			break;
+		case "blue":
+			background.add(new JButton("actions?"));
+			break;
+		case "yellow":
+			background.add(new JButton("graphics, data, whatever"));
+			break;
 		}
 		
-		try
-		{
-			Image btnScoutImg = ImageIO.read(new File("res\\scoutBtn.png"));
-			btnScout.setIcon(new ImageIcon(btnScoutImg));
-		}
-		catch (IOException e)
-		{
-			System.out.println("Couldn't find scoutBtn.png");
-		}
+		return new DefaultSingleCDockable (title, title, background);
 		
-		try
-		{
-			Image btnGraphImg = ImageIO.read(new File("res\\graphBtn.png"));
-			btnGraph.setIcon(new ImageIcon(btnGraphImg));
-		}
-		catch (IOException e)
-		{
-			System.out.println("Couldn't find graphBtn.png");
-		}
-		
-		try
-		{
-			Image btnVideoImg = ImageIO.read(new File("res\\videoBtn.png"));
-			btnVideo.setIcon(new ImageIcon(btnVideoImg));
-		}
-		catch (IOException e)
-		{
-			System.out.println("Couldn't find videoBtn.png");
-		}
-		
-		btnParse.setBorderPainted(false); 
-		btnParse.setContentAreaFilled(false); 
-		btnParse.setFocusPainted(false); 
-		btnParse.setOpaque(false);
-		
-		btnScout.setBorderPainted(false); 
-		btnScout.setContentAreaFilled(false); 
-		btnScout.setFocusPainted(false); 
-		btnScout.setOpaque(false);
-		
-		btnGraph.setBorderPainted(false); 
-		btnGraph.setContentAreaFilled(false); 
-		btnGraph.setFocusPainted(false); 
-		btnGraph.setOpaque(false);
-		
-		btnVideo.setBorderPainted(false); 
-		btnVideo.setContentAreaFilled(false); 
-		btnVideo.setFocusPainted(false); 
-		btnVideo.setOpaque(false);
-		
-		JPanel pnlButtons = new JPanel();
-		BoxLayout brdButtons = new BoxLayout(pnlButtons,BoxLayout.Y_AXIS);
-		pnlButtons.setLayout(brdButtons);
-		
-		pnlButtons.add(btnParse);
-		pnlButtons.add(btnScout);
-		pnlButtons.add(btnGraph);
-		pnlButtons.add(btnVideo);
-		
-		Container cntForm = this.getContentPane();
-        cntForm.setLayout (new BorderLayout());
-		
-        cntForm.add(pnlButtons, BorderLayout.CENTER);
-        
-		this.setSize(200,200);
-		this.setVisible(true);
-
+	}
+	
+	public static File loadFile(){
+		JFileChooser fileChooser = new JFileChooser(".2d");
+		FileFilter filter = new FileNameExtensionFilter(".2d Data File", new String[] {"2d"});
+		fileChooser.setFileFilter(filter);
+		Component temp = null;
+		fileChooser.showOpenDialog(temp);
+		return fileChooser.getSelectedFile();
 	}
 
 }
