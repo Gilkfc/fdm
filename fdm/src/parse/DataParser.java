@@ -21,18 +21,22 @@ import animationPack.AnimationBuilder;
 
 public class DataParser {
 
-	BufferedReader br;
+	BufferedReader br, br2;
 	String line;
 	String[] split;
 	String data = "";
 	int plcnt = 1;
 	int graphIndex;
 	int initialFrame,finalFrame;
-	int initPos, finalPos, ballCarrier;
+	int initPos, finalPos;
+	int ballCarrier = 99;
 	boolean team1C = true;
 	List<Frame> frameList = new ArrayList<Frame>();
 	List<String> screenShotPathList = new ArrayList<String>();
+	List<Graph> graphStreamList = new ArrayList<Graph>();
 	AnimationBuilder ab = new AnimationBuilder();
+	Frame tempFrame;
+	Player tempPlayer;
 
 	/*
 	 * Not all GraphMLs need to be created. The user now will be prompted for a input with the range
@@ -149,6 +153,7 @@ public class DataParser {
 			tb.insertGraphStream(g, i);
 			String ss = frameList.get(i).getScreenShotPath();
 			screenShotPathList.add(ss);
+			frameList.remove(i);
 		}
 	}
 
@@ -172,4 +177,80 @@ public class DataParser {
 	{
 		frameList.clear();
 	}
+	
+	public void newDataParser(File data, File scout){
+		sourceReader(data);
+		teamConsidered();
+		try {
+			while(br.ready()){
+				line = br.readLine();
+				split = line.split(" ");
+				for(int i=0;i<split.length;i++){
+					if(!split[i].isEmpty()){
+						if(!split[i].contains(".")){
+							graphIndex = Integer.parseInt(split[i]);
+							tempFrame = new Frame(graphIndex,team1C);
+							System.out.println("Made Frame " + graphIndex);
+						}else{
+							tempPlayer = new Player(Float.valueOf(split[i]),Float.valueOf(split[i+1]));
+							tempFrame.addPlayer(tempPlayer);
+							System.out.println("\tAdded player to Frame" + graphIndex);
+							i++;
+						}
+					}
+				}
+				newScoutParser(scout,graphIndex);
+				graphStreamList.add(tempFrame.createGraphStream());
+				System.out.println("\t\t\tCreated graphStream. GodBless");
+			}
+			br.close();
+		} catch (IOException e) {
+
+			e.printStackTrace();
+		}
+	}
+	
+	public void newScoutParser(File file, int index){
+		try {
+			br2 = new BufferedReader(new FileReader(file));
+			//line = br.readLine();
+		} catch (IOException e) {
+			System.out.println("Couldn't find file.");
+		}
+
+		try {
+			while(br2.ready()){
+				line = br2.readLine();
+				split = line.split(" ");
+				if(Integer.parseInt(split[0]) <= index){
+					if(split[5].equals("1") && ballCarrier != Integer.parseInt(split[1]))
+					{
+
+						ballCarrier = Integer.parseInt(split[1]);
+					}
+					tempFrame.determineBallCarrier(ballCarrier);
+					System.out.println("\t\tDetermined BC for Frame " + index);
+				}
+				br2.close();
+			}
+			br2.close();
+		} catch (IOException e) {
+			//e.printStackTrace();
+		}
+
+	}
+	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+

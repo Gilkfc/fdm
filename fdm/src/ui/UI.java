@@ -214,6 +214,7 @@ public class UI {
 				textPane.setBackground(Color.RED);
 				textPane.setText("Wait for the files to be created");
 				dp.writer(Integer.parseInt(initialFrameTxt.getText()), Integer.parseInt(finalFrameTxt.getText()));
+				System.out.println("fuck");
 				tb = new TabbedGraphs(Integer.parseInt(initialFrameTxt.getText()), Integer.parseInt(finalFrameTxt.getText()), null);
 				tb.setVisible(true);
 				tb.setSize(1000, 1000);
