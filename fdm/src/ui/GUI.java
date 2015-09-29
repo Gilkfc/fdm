@@ -36,6 +36,8 @@ public class GUI
 	private JFrame jf;
 	File graphData;
 	File scoutData;
+	Integer initFrame;
+	Integer finalFrame;
 	DataParser dp = new DataParser();
 	static JButton redB = new JButton("red");
 	static JButton greenB = new JButton("green");
@@ -203,7 +205,6 @@ public class GUI
 		JButton ok = new JButton("OK");
 		JFrame tempFrame = new JFrame("Soccer Miner");
 		JLabel tempLbl = new JLabel("Informe o intervalo de Frames para visualização.");
-		
 		initialFrameTxt.setColumns(10);
 		finalFrameTxt.setColumns(10);
 		tempFrame.setBounds(50, 50, 289, 99);
@@ -220,10 +221,12 @@ public class GUI
 		{
 			public void actionPerformed(ActionEvent e)
 			{
+				initFrame = Integer.parseInt(initialFrameTxt.getText());
+				finalFrame = Integer.parseInt(finalFrameTxt.getText());
 				System.out.println(jf.getHeight() + " " + jf.getWidth());
 				System.out.println(tempFrame.getHeight() + " " + tempFrame.getWidth());
+				tempFrame.dispose();
 			}
 		});
-	}
-	
+	}	
 }
