@@ -226,6 +226,12 @@ public class GUI
 				System.out.println(jf.getHeight() + " " + jf.getWidth());
 				System.out.println(tempFrame.getHeight() + " " + tempFrame.getWidth());
 				tempFrame.dispose();
+				int index = initFrame;
+				while(index <= finalFrame)
+				{				
+				dp.newGraphVisualizer(index);
+				index++;
+				}
 			}
 		});
 	}	

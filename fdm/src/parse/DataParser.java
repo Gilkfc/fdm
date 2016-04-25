@@ -156,6 +156,15 @@ public class DataParser {
 			frameList.remove(i);
 		}
 	}
+	
+	public Graph newGraphVisualizer(int index)
+	{
+		Graph g = null;
+		g = frameList.get(index).createGraphStream();
+		String ss = frameList.get(index).getScreenShotPath();
+		screenShotPathList.add(ss);		
+		return g;		
+	}
 
 	public void convertAnimation()
 	{
