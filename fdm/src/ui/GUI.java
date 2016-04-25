@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.EventQueue;
 import java.awt.FlowLayout;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -24,11 +23,21 @@ import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import org.graphstream.graph.Graph;
+import org.graphstream.ui.swingViewer.DefaultView;
+import org.graphstream.ui.view.Viewer;
+
 import parse.DataParser;
+import bibliothek.gui.DockController;
+import bibliothek.gui.DockFrontend;
+import bibliothek.gui.Dockable;
+import bibliothek.gui.dock.DefaultDockable;
+import bibliothek.gui.dock.SplitDockStation;
+import bibliothek.gui.dock.StackDockStation;
 import bibliothek.gui.dock.common.CControl;
-import bibliothek.gui.dock.common.CLocation;
 import bibliothek.gui.dock.common.DefaultSingleCDockable;
 import bibliothek.gui.dock.common.SingleCDockable;
+import bibliothek.gui.dock.station.split.SplitDockProperty;
 
 
 public class GUI
@@ -38,19 +47,20 @@ public class GUI
 	File scoutData;
 	Integer initFrame;
 	Integer finalFrame;
-	DataParser dp = new DataParser();
+	static DataParser dp = new DataParser();
 	static JButton redB = new JButton("red");
 	static JButton greenB = new JButton("green");
 	static JButton blueB = new JButton("blue");
 	static JButton cyanB = new JButton("cyan");
 	static JTextArea cyanTextArea = new JTextArea();
-	SingleCDockable red = create("red", Color.RED); 		// Will contain the visualizations
-	SingleCDockable green = create("green", Color.GREEN);	// Will contain the graph tree. I still nee to see how I'm doing this
-	SingleCDockable blue = create("blue", Color.BLUE);		// Will contain available actions. probably.
-	SingleCDockable cyan = create("cyan", Color.CYAN);	// Will show data or graphics or something else.
-	
+	Dockable red = createDockable("red", Color.RED); 		// Will contain the visualizations
+	Dockable green = createDockable("green", Color.GREEN);	// Will contain the graph tree. I still nee to see how I'm doing this
+	Dockable blue = createDockable("blue", Color.BLUE);		// Will contain available actions. probably.
+	Dockable cyan = createDockable("cyan", Color.CYAN);	// Will show data or graphics or something else.
+	Dockable black = createDockable("black", Color.BLACK);
+	Dockable orange = createDockable("orange", Color.ORANGE);
 
-	
+
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -70,8 +80,9 @@ public class GUI
 	public GUI() {
 		initialize();
 	}
-	
-	
+
+
+	@SuppressWarnings("deprecation")
 	public void initialize()
 	{
 		String className = UIManager.getSystemLookAndFeelClassName();
@@ -91,12 +102,22 @@ public class GUI
 			e.printStackTrace();
 		}
 		jf = new JFrame("Soccer Miner");
+
+		DockController controller = new DockController();
+		DockController.disableCoreWarning();
+		DockFrontend frontend = new DockFrontend(jf);
 		jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
+		controller.setRootWindow(jf);
+
 		JMenuBar menuBar = new JMenuBar();
 		jf.setJMenuBar(menuBar);
 		JMenu menuFile = new JMenu("Menu");
 		menuBar.add(menuFile);
+
+		StackDockStation station = new StackDockStation();
+		SplitDockStation splitDockStation = new SplitDockStation();
+		controller.add(splitDockStation);
+		jf.add(splitDockStation);
 		
 		JMenu menuAbout = new JMenu("About");
 		menuBar.add(menuAbout);
@@ -104,10 +125,10 @@ public class GUI
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				//TODO simple about dialog :)
+				
 			}
 		});
-		
+
 		JMenuItem mntmOpen = new JMenuItem("Load Files");
 		menuFile.add(mntmOpen);
 		mntmOpen.addActionListener(new ActionListener()
@@ -130,7 +151,7 @@ public class GUI
 				dp.sourceReader(scoutData);
 				dp.scoutParser();
 				cyanTextArea.setText("scout data loaded");
-				getIntervalAndDisplayGraphs();
+				getIntervalAndDisplayGraphs(station);
 				//dp.newDataParser(graphData, scoutData);
 				//TODO Flie Choosing shenanigans. Prolly do both choosings in sequence
 				/*
@@ -138,43 +159,36 @@ public class GUI
 				 */
 			}
 		});
-		
+
 		JMenuItem mntmReset = new JMenuItem("Reset");
 		menuFile.add(mntmReset);
 		mntmReset.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
 			{
-				getIntervalAndDisplayGraphs();
+				getIntervalAndDisplayGraphs(station);
 				//TODO plan and implement.
 			}
 		});
-		
+
 		CControl control = new CControl(jf);
-		jf.setLayout(new GridLayout(1,1));
-		jf.add(control.getContentArea());
+			
+		splitDockStation.drop(red);
+		splitDockStation.drop(green, new SplitDockProperty(0.3, 0, 0.7, 0.5 ));
+		splitDockStation.drop(blue, new SplitDockProperty(0.3, 0, 0.7, 0.5 ));
+		//splitDockStation.drop(cyan, new SplitDockProperty(0.75, 0.5, 0.25, 0.5 ));
+						
+        station.drop(black);
+        station.drop(orange);
+        //splitDockStation.drop(station, new SplitDockProperty(0.4, 0, 0.4, 0.5 ));
 		
-		control.addDockable(red);
-		control.addDockable(green);
-		control.addDockable(blue);
-		control.addDockable(cyan);
-		
-		red.setLocation(CLocation.base().normalNorth(0.6));
-		red.setVisible(true);
-		
-		green.setLocation(CLocation.base().normalWest(0.23));
-		green.setVisible(true);
-		
-		blue.setLocation(CLocation.base().normalEast(0.23));
-		blue.setVisible(true);
-		
-		cyan.setLocation(CLocation.base().normalSouth(0.23));
-		cyan.setVisible(true);
-		
-		jf.setBounds(100, 100, 805, 611);
+        
+
+		jf.setBounds(0,0,900,900);
 		jf.setVisible(true);
+		
 	}
-	
+
 	public static SingleCDockable create(String title, Color color){
 		JPanel background = new JPanel();
 		background.setOpaque(true);
@@ -195,11 +209,43 @@ public class GUI
 			break;
 		}
 		
+
 		return new DefaultSingleCDockable (title, title, background);
-		
+
 	}
 	
-	public void getIntervalAndDisplayGraphs(){
+    private static Dockable createDockable(String title, Color color)
+    {
+        DefaultDockable dockable = new DefaultDockable();
+        dockable.setTitleText(title);
+        JPanel panel = new JPanel();
+        panel.setOpaque(true);
+        panel.setBackground(color);
+        dockable.add(panel);
+        return dockable;
+    }
+    
+    private static Dockable createDockableGraph(String title, int index)
+    {
+        DefaultDockable dockable = new DefaultDockable();
+        dockable.setTitleText(title);
+        JPanel panel = new JPanel();
+        panel.setOpaque(true);
+        Graph g = dp.newGraphVisualizer(index);
+        
+        System.setProperty("org.graphstream.ui.renderer", "org.graphstream.ui.j2dviewer.J2DGraphRenderer");
+		Viewer viewer = new Viewer(g,Viewer.ThreadingModel.GRAPH_IN_ANOTHER_THREAD);
+		viewer.addDefaultView(false);
+		//g.display();
+		//View view = viewer.addDefaultView(false);
+	    DefaultView defaultViewer = new DefaultView(viewer, "graph", Viewer.newGraphRenderer());
+        panel.add(defaultViewer);
+        dockable.add(panel);
+        return dockable;
+    }
+	
+
+	public void getIntervalAndDisplayGraphs(StackDockStation sds){
 		JTextField initialFrameTxt = new JTextField();
 		JTextField finalFrameTxt = new JTextField();
 		JButton ok = new JButton("OK");
@@ -216,7 +262,7 @@ public class GUI
 		tempFrame.getContentPane().add(ok);
 		tempFrame.setResizable(false);
 		tempFrame.setVisible(true);
-		
+
 		ok.addActionListener(new ActionListener()
 		{
 			public void actionPerformed(ActionEvent e)
@@ -229,10 +275,10 @@ public class GUI
 				int index = initFrame;
 				while(index <= finalFrame)
 				{				
-				dp.newGraphVisualizer(index);
-				index++;
+					sds.drop(createDockableGraph("Frame " + index,index));
 				}
 			}
 		});
-	}	
+	}
+	
 }
